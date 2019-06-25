@@ -7,7 +7,6 @@ import cucumber.api.java.en.When;
 import static io.restassured.RestAssured.*;
 
 import io.restassured.path.json.JsonPath;
-import io.restassured.response.ResponseBody;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
@@ -29,7 +28,7 @@ public class StepDefs {
     @When("I create a new board with name {string}")
     public void i_create_a_new_board_with_name(String boardName) {
         this.boardName = boardName;
-        Map<String, String> params = new HashMap<>();
+        Map<String, String> params = new HashMap<String, String>();
         params.put("name", boardName);
         params.put("key", PropertyLoader.getProperty("key"));
         params.put("token", PropertyLoader.getProperty("token"));
