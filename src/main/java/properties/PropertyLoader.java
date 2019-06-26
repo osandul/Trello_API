@@ -12,6 +12,7 @@ public class PropertyLoader {
         return getValuePipeline(pathToPropertyFile, key);
     }
 
+
     private static String getPropertyValueFromFile(String path, String key) {
         return getPropertyFile(path).getProperty(key);
     }
