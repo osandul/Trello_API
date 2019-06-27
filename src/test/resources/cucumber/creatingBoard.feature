@@ -5,7 +5,8 @@ Scenario: Create a new board
   When I create a new board with name BOARD
   Then I check that server handles it and returns a success status
   And I check that the name BOARD is set correctly
-  And I get id of board BOARD
+  And I get id of board and save to context
+
 
   Scenario: Create a list
 

@@ -1,10 +1,12 @@
 package steps;
 
+import common.ScenarioContext;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
+import static common.ScenarioContext.Context.*;
 import static io.restassured.RestAssured.*;
 
 import io.restassured.path.json.JsonPath;
@@ -49,10 +51,10 @@ public class StepDefs {
         Assert.assertEquals(boardName, name.toString());
     }
 
-    @And("I get id of board {name}")
+    @And("I get id of board and save to context")
     public void iGetIdOfBoardBOARD()  {
         JsonPath jsonPathEvaluator = response.jsonPath();
-   //     boardId = jsonPathEvaluator.get("id");
-
+        ScenarioContext.setContext(BOARD_ID,jsonPathEvaluator.get("id"));
         }
+
 }
