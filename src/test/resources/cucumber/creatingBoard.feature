@@ -8,8 +8,7 @@ Scenario: Create a new board
   And I get id of board and save to context
 
 
-  Scenario: Create a list
-
+  Scenario: Create a list in a created board
 
     When I create a new list with name TO_DO
     Then I check that server handles it and returns a success status
