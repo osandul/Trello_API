@@ -8,11 +8,11 @@ import org.testng.annotations.Test;
 @CucumberOptions(
         features = "src/test/resources",
         glue = {"steps"},
-        plugin = {
+        plugin = {"io.qameta.allure.cucumber4jvm.AllureCucumber4Jvm",
                 "pretty",
-                "html:target/cucumber-reports/cucumber-pretty",
                 "json:target/cucumber-reports/CucumberTestReport.json",
-                "rerun:target/cucumber-reports/rerun.txt"}
+                "rerun:target/cucumber-results/main/failed_eld.txt"
+        }
 )
 
 public class TestRunner extends AbstractTestNGCucumberTests {
