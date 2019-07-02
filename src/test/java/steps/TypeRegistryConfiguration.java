@@ -19,7 +19,7 @@ public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
     public void configureTypeRegistry(TypeRegistry typeRegistry) {
         typeRegistry.defineParameterType(new ParameterType<>(
                 "name",
-                "BOARD|TO_DO",
+                "BOARD|TO_DO|CARD",
                 Name.class,
                 (String s) ->Name.valueOf(s))
         );

@@ -4,8 +4,9 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public enum Name {
-    BOARD("Board"),
-    TO_DO("To Do");
+    BOARD("Test Board"),
+    TO_DO("To Do"),
+    CARD("Test Card");
 
     private final String name;
 

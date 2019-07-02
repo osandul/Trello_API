@@ -17,7 +17,9 @@ public class ScenarioContext {
 
     public enum Context {
         BOARD_ID,
-        BOARD_NAME
+        BOARD_NAME,
+        LIST_ID,
+        CARD_ID;
     }
 
     public static void setContext(Context key, Object value) {
@@ -28,7 +30,7 @@ public class ScenarioContext {
         return threadLocal.get().get(key.toString());
     }
 
-    public static Boolean isContains(Context key) {
+    public static Boolean Contains(Context key) {
         return threadLocal.get().containsKey(key.toString());
     }
 
