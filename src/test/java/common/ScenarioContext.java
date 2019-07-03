@@ -17,9 +17,8 @@ public class ScenarioContext {
 
     public enum Context {
         BOARD_ID,
-        BOARD_NAME,
         LIST_ID,
-        CARD_ID;
+        CARD_ID
     }
 
     public static void setContext(Context key, Object value) {

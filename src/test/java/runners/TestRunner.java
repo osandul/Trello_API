@@ -8,6 +8,7 @@ import org.testng.annotations.Test;
 @CucumberOptions(
         features = "src/test/resources",
         glue = {"steps"},
+        tags = {"not @Ignore"},
         plugin = {"io.qameta.allure.cucumber4jvm.AllureCucumber4Jvm",
                 "pretty",
                 "json:target/cucumber-reports/CucumberTestReport.json",

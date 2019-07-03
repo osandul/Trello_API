@@ -1,19 +1,13 @@
 package steps;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.google.gson.JsonObject;
+import com.jayway.jsonpath.JsonPath;
 import common.ScenarioContext;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-
-import static common.ScenarioContext.Context.*;
-import static io.restassured.RestAssured.*;
-
-import io.restassured.path.json.JsonPath;
-import io.restassured.specification.RequestSpecification;
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
+import io.restassured.specification.RequestSpecification;
 import org.testng.Assert;
 import properties.PropertyLoader;
 
@@ -21,12 +15,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static common.ScenarioContext.Context.*;
+import static io.restassured.RestAssured.given;
+
 public class StepDefs {
 
     private Response response;
     private ValidatableResponse validatableResponse;
     private RequestSpecification request;
-    private String responseString;
+    private List<String> idList;
 
 
     @When("I create a new board with name {name}")
@@ -49,14 +46,13 @@ public class StepDefs {
 
     @And("I check that the name {name} is set correctly")
     public void checksThatTheNameIsSetCorrectly(Name name) {
-        JsonPath jsonPathEvaluator = response.jsonPath();
+        io.restassured.path.json.JsonPath jsonPathEvaluator = response.jsonPath();
         Assert.assertEquals(jsonPathEvaluator.get("name"), name.toString());
     }
 
     @And("I get id of board and save to context")
     public void iGetIdOfBoardAndSaveToContext() {
-        JsonPath jsonPathEvaluator = response.jsonPath();
-        ScenarioContext.setContext(BOARD_ID, jsonPathEvaluator.get("id"));
+        ScenarioContext.setContext(BOARD_ID, response.jsonPath().get("id"));
     }
 
     @When("I create a new list with name {name}")
@@ -76,7 +72,7 @@ public class StepDefs {
 
     @And("I get id of the list and save to context")
     public void iGetIdOfTheListAndSaveToContext() {
-        JsonPath jsonPathEvaluator = response.jsonPath();
+        io.restassured.path.json.JsonPath jsonPathEvaluator = response.jsonPath();
         ScenarioContext.setContext(LIST_ID, jsonPathEvaluator.get("id"));
     }
 
@@ -92,33 +88,37 @@ public class StepDefs {
         headers.put("Content-Type", "application/json");
 
         response = given().headers(headers).queryParams(cardParams).when().post(PropertyLoader.getProperty("ROOT_API_URL") + "/1/cards");
-
     }
 
     @And("I get id of the card and save to context")
     public void iGetIdOfTheCardAndSaveToContext() {
-        JsonPath jsonPathEvaluator = response.jsonPath();
+        io.restassured.path.json.JsonPath jsonPathEvaluator = response.jsonPath();
         ScenarioContext.setContext(CARD_ID, jsonPathEvaluator.get("id"));
     }
 
-    @When("I get all board")
-    public void iGetAllBoard()  {
+    @When("I get all boards ids and set them into list")
+    public void iGetAllBoard() {
         Map<String, String> baseParams = new HashMap<>();
         baseParams.put("key", PropertyLoader.getProperty("key"));
         baseParams.put("token", PropertyLoader.getProperty("token"));
-        baseParams.put("fields","id");
+        baseParams.put("fields", "id");
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
+
         response = given().headers(headers).queryParams(baseParams).when()
                 .get(PropertyLoader.getProperty("ROOT_API_URL") + "/1/members/me/boards");
-        String jsonExp = "$.delivery_codes";
-        List<String> ids = JsonPath.read("$..id", response.body().asString());
+        idList = JsonPath.read(response.body().asString(), "$..id");
+    }
 
-        response.body().peek();
-        JsonPath jsonPathEvaluator = response.jsonPath();
-        validatableResponse = jsonPathEvaluator.get("id");
+    @Then("I delete all the boards, using the list with their ids")
+    public void iDeleteAllTheBoardsUsingTheListWithTheirIds() {
+        Map<String, String> baseParams = new HashMap<>();
+        baseParams.put("key", PropertyLoader.getProperty("key"));
+        baseParams.put("token", PropertyLoader.getProperty("token"));
 
-        response = given().headers(headers).queryParams(baseParams).when().delete(PropertyLoader.getProperty("ROOT_API_URL") + "1/boards/"+ validatableResponse);
-
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Content-Type", "application/json");
+        idList.forEach(s -> response = given().headers(headers).queryParams(baseParams).when().delete(PropertyLoader.getProperty("ROOT_API_URL") + "/1/boards/" + s));
     }
 }
+
