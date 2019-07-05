@@ -1,12 +1,15 @@
 package responses;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Builder
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
+
 public class BoardBodyResponse {
     private String id;
     private String name;
@@ -19,5 +22,16 @@ public class BoardBodyResponse {
     private String shortUrl;
     private PrefsBody prefs;
     private LabelsNameBody labelsName;
+    private String limits;
+    private String shortLink;
+    private String dateLastActivity;
+    private String datePluginDisable;
+    private String creationMethod;
+    private String ixUpdate;
+    private Boolean starred;
+    private Boolean subscribed;
+    private List<MembershipsBody> memberships;
+    private List<PoverUpsBody> powerUps;
+    private List<IdTagsBody> idTags;
 }
 

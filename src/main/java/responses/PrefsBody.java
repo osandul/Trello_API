@@ -32,3 +32,4 @@ public class PrefsBody {
     private Boolean canBePrivate;
     private Boolean canInvite;
 }
+

@@ -1,19 +1,18 @@
 package steps;
 
-import com.jayway.jsonpath.JsonPath;
+// import com.jayway.jsonpath.JsonPath;
+
 import common.ScenarioContext;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.restassured.response.Response;
-import io.restassured.response.ValidatableResponse;
-import io.restassured.specification.RequestSpecification;
 import org.testng.Assert;
 import properties.PropertyLoader;
+import responses.BoardBodyResponse;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
 
 import static common.ScenarioContext.Context.*;
 import static io.restassured.RestAssured.given;
@@ -21,9 +20,9 @@ import static io.restassured.RestAssured.given;
 public class StepDefs {
 
     private Response response;
-    private ValidatableResponse validatableResponse;
-    private RequestSpecification request;
-    private List<String> idList;
+
+    // private List<String> idList;
+    private List<BoardBodyResponse> bodiesList;
 
 
     @When("I create a new board with name {name}")
@@ -41,17 +40,17 @@ public class StepDefs {
 
     @Then("I check that server handles it and returns a success status")
     public void serverHandlesItAndReturnASuccessStatus() {
-        validatableResponse = response.then().assertThat().statusCode(200);
+        response.then().assertThat().statusCode(200);
     }
 
     @And("I check that the name {name} is set correctly")
     public void checksThatTheNameIsSetCorrectly(Name name) {
-        io.restassured.path.json.JsonPath jsonPathEvaluator = response.jsonPath();
-        Assert.assertEquals(jsonPathEvaluator.get("name"), name.toString());
+        Assert.assertEquals(response.jsonPath().get("name"), name.toString());
     }
 
     @And("I get id of board and save to context")
     public void iGetIdOfBoardAndSaveToContext() {
+
         ScenarioContext.setContext(BOARD_ID, response.jsonPath().get("id"));
     }
 
@@ -72,8 +71,7 @@ public class StepDefs {
 
     @And("I get id of the list and save to context")
     public void iGetIdOfTheListAndSaveToContext() {
-        io.restassured.path.json.JsonPath jsonPathEvaluator = response.jsonPath();
-        ScenarioContext.setContext(LIST_ID, jsonPathEvaluator.get("id"));
+        ScenarioContext.setContext(LIST_ID, response.jsonPath().get("id"));
     }
 
     @When("I create a new card with name {name}")
@@ -92,25 +90,26 @@ public class StepDefs {
 
     @And("I get id of the card and save to context")
     public void iGetIdOfTheCardAndSaveToContext() {
-        io.restassured.path.json.JsonPath jsonPathEvaluator = response.jsonPath();
-        ScenarioContext.setContext(CARD_ID, jsonPathEvaluator.get("id"));
+        ScenarioContext.setContext(CARD_ID, response.jsonPath().get("id"));
     }
 
-    @When("I get all boards ids and set them into list")
+    @When("I get response data and set it into list")
     public void iGetAllBoard() {
         Map<String, String> baseParams = new HashMap<>();
         baseParams.put("key", PropertyLoader.getProperty("key"));
         baseParams.put("token", PropertyLoader.getProperty("token"));
-        baseParams.put("fields", "id");
+        //baseParams.put("fields", "id");
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
 
         response = given().headers(headers).queryParams(baseParams).when()
                 .get(PropertyLoader.getProperty("ROOT_API_URL") + "/1/members/me/boards");
-        idList = JsonPath.read(response.body().asString(), "$..id");
+        bodiesList = Arrays.asList(response.getBody().as(BoardBodyResponse[].class));
+        //idList = bodiesList.stream().map(BoardBodyResponse::getId).collect(Collectors.toList());
+        // idList= JsonPath.read(response.body().asString(), "$..id");
     }
 
-    @Then("I delete all the boards, using the list with their ids")
+    @Then("I get board ids and delete all the boards")
     public void iDeleteAllTheBoardsUsingTheListWithTheirIds() {
         Map<String, String> baseParams = new HashMap<>();
         baseParams.put("key", PropertyLoader.getProperty("key"));
@@ -118,7 +117,7 @@ public class StepDefs {
 
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
-        idList.forEach(s -> response = given().headers(headers).queryParams(baseParams).when().delete(PropertyLoader.getProperty("ROOT_API_URL") + "/1/boards/" + s));
+        bodiesList.forEach(b -> response = given().headers(headers).queryParams(baseParams).when().delete(PropertyLoader.getProperty("ROOT_API_URL") + "/1/boards/" + b.getId()));
     }
 }
 

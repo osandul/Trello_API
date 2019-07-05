@@ -22,9 +22,9 @@ Feature: Board management
     And I check that the name CARD is set correctly
     And I get id of the card and save to context
 
-    @Ignore
-  Scenario: Delete all board
 
-    When I get all boards ids and set them into list
-    Then I delete all the boards, using the list with their ids
+  Scenario: Delete all boards
+
+    When I get response data and set it into list
+    Then I get board ids and delete all the boards
     Then I check that server handles it and returns a success status
