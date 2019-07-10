@@ -17,7 +17,7 @@ import java.util.*;
 import static common.ScenarioContext.Context.*;
 import static io.restassured.RestAssured.given;
 
-public class StepDefs {
+public final class StepDefs {
 
     private Response response;
 
@@ -27,6 +27,7 @@ public class StepDefs {
 
     @When("I create a new board with name {name}")
     public void i_create_a_new_board_with_name(Name name) {
+
         Map<String, String> boardParams = new HashMap<>();
         boardParams.put("name", name.toString());
         boardParams.put("key", PropertyLoader.getProperty("key"));
@@ -36,6 +37,8 @@ public class StepDefs {
         headers.put("Content-Type", "application/json");
 
         response = given().headers(headers).queryParams(boardParams).when().post(PropertyLoader.getProperty("ROOT_API_URL") + "/1/boards/");
+
+
     }
 
     @Then("I check that server handles it and returns a success status")

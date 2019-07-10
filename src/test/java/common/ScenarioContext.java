@@ -3,7 +3,7 @@ package common;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ScenarioContext {
+public class ScenarioContext{
 
     private static ThreadLocal<Map<String, Object>> threadLocal = new ThreadLocal();
     private ScenarioContext() {
