@@ -9,7 +9,9 @@ import cucumber.api.java.en.When;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import properties.PropertyLoader;
-import responses.BoardBodyResponse;
+import responseClasses.ResponseClass;
+import responses.baseResponses.BoardBodyResponse;
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 import java.util.*;
@@ -20,6 +22,7 @@ import static io.restassured.RestAssured.given;
 public final class StepDefs {
 
     private Response response;
+    private ResponseClass createBoard;
 
     // private List<String> idList;
     private List<BoardBodyResponse> bodiesList;
@@ -36,15 +39,23 @@ public final class StepDefs {
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
 
-        response = given().headers(headers).queryParams(boardParams).when().post(PropertyLoader.getProperty("ROOT_API_URL") + "/1/boards/");
+//       createBoard =
+                given().
+                        headers(headers).queryParams(boardParams)
+                        .when()
+                        .post(PropertyLoader.getProperty("ROOT_API_URL") + "/1/boards/")
+                        .then()
+                        .statusCode(200);
 
 
     }
 
-    @Then("I check that server handles it and returns a success status")
-    public void serverHandlesItAndReturnASuccessStatus() {
-        response.then().assertThat().statusCode(200);
-    }
+//    @Then("I check that server handles it and returns a success status")
+//    public void serverHandlesItAndReturnASuccessStatus() {
+//        assertThat(createBoard.)
+//        //createBoard.assertThat().statusCode(200);
+//
+//    }
 
     @And("I check that the name {name} is set correctly")
     public void checksThatTheNameIsSetCorrectly(Name name) {
@@ -98,6 +109,8 @@ public final class StepDefs {
 
     @When("I get response data and set it into list")
     public void iGetAllBoard() {
+
+
         Map<String, String> baseParams = new HashMap<>();
         baseParams.put("key", PropertyLoader.getProperty("key"));
         baseParams.put("token", PropertyLoader.getProperty("token"));
@@ -107,6 +120,7 @@ public final class StepDefs {
 
         response = given().headers(headers).queryParams(baseParams).when()
                 .get(PropertyLoader.getProperty("ROOT_API_URL") + "/1/members/me/boards");
+
         bodiesList = Arrays.asList(response.getBody().as(BoardBodyResponse[].class));
         //idList = bodiesList.stream().map(BoardBodyResponse::getId).collect(Collectors.toList());
         // idList= JsonPath.read(response.body().asString(), "$..id");
@@ -120,7 +134,11 @@ public final class StepDefs {
 
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
-        bodiesList.forEach(b -> response = given().headers(headers).queryParams(baseParams).when().delete(PropertyLoader.getProperty("ROOT_API_URL") + "/1/boards/" + b.getId()));
+        bodiesList.forEach(b -> response = given()
+                .headers(headers)
+                .queryParams(baseParams)
+                .when()
+                .delete(PropertyLoader.getProperty("ROOT_API_URL") + "/1/boards/" + b.getId()));
     }
 }
 

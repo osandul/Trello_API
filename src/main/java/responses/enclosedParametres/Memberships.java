@@ -1,4 +1,4 @@
-package responses;
+package responses.enclosedParametres;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Builder;
@@ -8,7 +8,7 @@ import lombok.Data;
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
 
-public class MembershipsBody {
+public class Memberships {
 
     private String id;
     private String idMember;

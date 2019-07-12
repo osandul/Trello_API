@@ -1,8 +1,9 @@
-package responses;
+package responses.baseResponses;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Builder;
 import lombok.Data;
+import responses.enclosedParametres.*;
 
 import java.util.List;
 
@@ -20,8 +21,8 @@ public class BoardBodyResponse {
     private Boolean pinned;
     private String url;
     private String shortUrl;
-    private PrefsBody prefs;
-    private LabelsNameBody labelsName;
+    private Prefs prefs;
+    private LabelsName labelsName;
     private String limits;
     private String shortLink;
     private String dateLastActivity;
@@ -30,8 +31,8 @@ public class BoardBodyResponse {
     private String ixUpdate;
     private Boolean starred;
     private Boolean subscribed;
-    private List<MembershipsBody> memberships;
-    private List<PoverUpsBody> powerUps;
-    private List<IdTagsBody> idTags;
+    private List<Memberships> memberships;
+    private List<PoverUps> powerUps;
+    private List<IdTags> idTags;
 }
 

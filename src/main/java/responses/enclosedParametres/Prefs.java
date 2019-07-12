@@ -1,4 +1,4 @@
-package responses;
+package responses.enclosedParametres;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class PrefsBody {
+public class Prefs {
     private String permissionLevel;
     private Boolean hideVotes;
     private String voting;
