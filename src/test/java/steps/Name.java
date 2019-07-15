@@ -1,12 +1,13 @@
 package steps;
 
 import lombok.AllArgsConstructor;
+import properties.PropertyLoader;
 
 @AllArgsConstructor
 public enum Name {
-    BOARD("Test Board"),
-    TO_DO("To Do"),
-    CARD("Test Card");
+    BOARD(PropertyLoader.getProperty("BOARD_NAME")),
+    TO_DO(PropertyLoader.getProperty("LIST_NAME")),
+    CARD(PropertyLoader.getProperty("CARD_NAME"));
 
     private final String name;
 
