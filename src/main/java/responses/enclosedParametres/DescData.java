@@ -9,5 +9,5 @@ import java.util.List;
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DescData {
-    private List<Emoji> emoji;
+    private Emoji emoji;
 }

@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class LabelsName {
+public class LabelNames {
     private String green;
     private String yellow;
     private String orange;

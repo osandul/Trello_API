@@ -16,5 +16,5 @@ public class ListBodyResponse {
     private Boolean closed;
     private String idBoard;
     private Integer pos;
-    private List<Limits> limits;
+    private Limits limits;
 }

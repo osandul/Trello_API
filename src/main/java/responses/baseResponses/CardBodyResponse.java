@@ -16,12 +16,12 @@ import java.util.List;
 public class CardBodyResponse {
 
     private String id;
-    private List<Badges> badges;
+    private Badges badges;
     private Boolean closed;
     private Boolean dueComplete;
     private String dateLastActivity;
     private String desc;
-    private List<DescData> descData;
+    private DescData descData;
     private String due;
     private String dueReminder;
     private String email;
@@ -36,6 +36,6 @@ public class CardBodyResponse {
     private String shortUrl;
     private Boolean subscribed;
     private String url;
-    private List<Limits> limits;
+    private Limits limits;
 
 }

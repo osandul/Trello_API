@@ -11,18 +11,18 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Badges {
 
-    private Boolean location;
-    private Integer votes;
-    private Boolean viewingMemberVoted;
-    private Boolean subscribed;
-    private String fogbugz;
-    private Integer checkItems;
-    private Integer checkItemsChecked;
-    private Integer comments;
-    private Integer attachments;
-    private Boolean description;
-    private String due;
-    private Boolean dueComplete;
-    private List<AttachmentsByType> attachmentsByType;
+//    private Boolean location;
+//    private Integer votes;
+//    private Boolean viewingMemberVoted;
+//    private Boolean subscribed;
+//    private String fogbugz;
+//    private Integer checkItems;
+//    private Integer checkItemsChecked;
+//    private Integer comments;
+//    private Integer attachments;
+//    private Boolean description;
+//    private String due;
+//    private Boolean dueComplete;
+    private AttachmentsByType attachmentsByType;
 
 }

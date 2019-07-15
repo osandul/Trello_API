@@ -1,6 +1,7 @@
 package responses.baseResponses;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Builder;
 import lombok.Data;
 import responses.enclosedParametres.*;
@@ -10,6 +11,8 @@ import java.util.List;
 @Data
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonDeserialize(as = BoardBodyResponse.class )
+
 
 public class BoardBodyResponse {
     private String id;
@@ -22,8 +25,8 @@ public class BoardBodyResponse {
     private String url;
     private String shortUrl;
     private Prefs prefs;
-    private LabelsName labelsName;
-    private String limits;
+    private LabelNames labelNames;
+    private Limits limits;
     private String shortLink;
     private String dateLastActivity;
     private String datePluginDisable;
@@ -32,7 +35,7 @@ public class BoardBodyResponse {
     private Boolean starred;
     private Boolean subscribed;
     private List<Memberships> memberships;
-    private List<PoverUps> powerUps;
+    private List<PowerUps> powerUps;
     private List<IdTags> idTags;
 }
 

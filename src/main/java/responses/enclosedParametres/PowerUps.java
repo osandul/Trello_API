@@ -6,5 +6,5 @@ import lombok.Data;
 @Data
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class PoverUps {
+public class PowerUps {
 }
