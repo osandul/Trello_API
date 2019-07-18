@@ -6,15 +6,12 @@ import common.ScenarioContext;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
-import org.testng.Assert;
-import properties.PropertyLoader;
 import requestSpec.InitSpec;
 import responses.baseResponses.BoardBodyResponse;
 import responses.baseResponses.CardBodyResponse;
 import responses.baseResponses.ListBodyResponse;
-import sun.invoke.empty.Empty;
+import service.Parameters;
 
 import static org.hamcrest.CoreMatchers.is;
 
@@ -47,10 +44,10 @@ public final class StepDefs {
 
         boardBodyResponse =
                 given()
-                        .spec(InitSpec.spec)
+                        .spec(InitSpec.createBoardSpec)
                         .queryParams(boardParams)
                         .when()
-                        .post("/1/boards/")
+                        .post()
                         .then()
                         .statusCode(200)
                         .extract()
@@ -76,6 +73,7 @@ public final class StepDefs {
 
     @And("I get id of board and save to context")
     public void iGetIdOfBoardAndSaveToContext() {
+
         ScenarioContext.setContext(BOARD_ID, boardBodyResponse.getId());
     }
 
@@ -88,10 +86,10 @@ public final class StepDefs {
 
         listBodyResponse =
                 given()
-                        .spec(InitSpec.spec)
+                        .spec(InitSpec.createListSpec)
                         .queryParams(listParams)
                         .when()
-                        .post("/1/lists")
+                        .post()
                         .then()
                         .statusCode(200)
                         .extract()
@@ -111,10 +109,10 @@ public final class StepDefs {
 
         cardBodyResponse =
                 given()
-                        .spec(InitSpec.spec)
+                        .spec(InitSpec.createCardSpec)
                         .queryParams(cardParams)
                         .when()
-                        .post("/1/cards")
+                        .post()
                         .then()
                         .statusCode(200)
                         .extract()
@@ -123,15 +121,16 @@ public final class StepDefs {
 
     @And("I get id of the card and save to context")
     public void iGetIdOfTheCardAndSaveToContext() {
+
         ScenarioContext.setContext(CARD_ID, cardBodyResponse.getId());
     }
 
     @When("I get response data and set it into list")
     public void iGetAllBoard() {
         response = given()
-                .spec(InitSpec.spec)
+                .spec(InitSpec.getAllBoardsSpec)
                 .when()
-                .get("/1/members/me/boards")
+                .get()
                 .then()
                 .statusCode(200);
 
@@ -142,9 +141,9 @@ public final class StepDefs {
     public void iDeleteAllTheBoardsUsingTheListWithTheirIds() {
 
         bodiesList.forEach(b -> allBoardsResponse = given()
-                .spec(InitSpec.spec)
+                .spec(InitSpec.deleteBoardSpec)
                 .when()
-                .delete("/1/boards/" + b.getId())
+                .delete(b.getId())
                 .then()
                 .statusCode(200)
                 .extract()
@@ -153,11 +152,7 @@ public final class StepDefs {
 
     @Then("Check that the list of boards is empty")
     public void checkThatTheListOfBoardsIsEmpty() {
-       assertTrue(bodiesList.isEmpty());
-
-
-
-
+        assertTrue(bodiesList.isEmpty());
     }
 }
 

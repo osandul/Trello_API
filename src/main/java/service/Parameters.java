@@ -4,11 +4,11 @@ package service;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import org.codehaus.groovy.tools.StringHelper;
-import properties.PropertyLoader;
 
 import java.util.HashMap;
 import java.util.Map;
+
+
 
 @Getter
 @Setter
@@ -21,6 +21,9 @@ public class Parameters {
     private String baseUrl = null;
     private HttpMethod httpMethod;
     private Object body = null;
+
+
+
 
     //<editor-fold desc="Enums">
     @AllArgsConstructor
