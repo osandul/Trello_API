@@ -1,4 +1,4 @@
-package bodies;
+package baseRequests;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class BoardBody {
+public class BoardBodyRequest {
     private String name;
     private Boolean defaultLabels;
     private Boolean defaultLists;

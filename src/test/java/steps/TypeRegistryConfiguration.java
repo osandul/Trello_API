@@ -21,7 +21,7 @@ public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
                 "name",
                 "BOARD|TO_DO|CARD",
                 Name.class,
-                (String s) ->Name.valueOf(s))
+                (String s) -> Name.valueOf(s))
         );
     }
 }

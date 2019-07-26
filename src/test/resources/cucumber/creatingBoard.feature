@@ -20,10 +20,10 @@ Feature: Board management
     And I get id of the card and save to context
 
 
-#  Scenario: Delete all boards
+  Scenario: Delete all boards
 
-#    When I get response data and set it into list
-#    Then I get board ids and delete all the boards
-#    Then I get response data and set it into list
-#    Then Check that the list of boards is empty
+    When I get response data and set it into list
+    Then I get board ids and delete all the boards
+    Then I get response data and set it into list
+    Then Check that the list of boards is empty
 
