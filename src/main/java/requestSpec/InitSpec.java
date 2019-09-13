@@ -27,7 +27,6 @@ public class InitSpec {
             .addHeader("Content-Type", "application/json")
             .addQueryParam("key", PropertyLoader.getProperty("key"))
             .addQueryParam("token", PropertyLoader.getProperty("token"))
-            //.setConfig(RestAssured.config = RestAssured.config().httpClient(HttpClientConfig.httpClientConfig().reuseHttpClientInstance()))
             .build();
 
 
@@ -70,6 +69,14 @@ public class InitSpec {
             .addHeader("Content-Type", "application/json")
             .addQueryParam("key", PropertyLoader.getProperty("key"))
             .addQueryParam("token", PropertyLoader.getProperty("token"))
+            .build();
+
+    public static RequestSpecification createBoardNoAuthSpec = new RequestSpecBuilder()
+            .setConfig(getCustomTimeOut(RestAssuredConfig.config()))
+            .setContentType(ContentType.JSON)
+            .setBaseUri(PropertyLoader.getProperty("ROOT_URL"))
+            .setBasePath(PropertyLoader.getProperty("board_path"))
+            .addHeader("Content-Type", "application/json")
             .build();
 }
 
