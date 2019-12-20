@@ -9,7 +9,7 @@ End-to-end scenarios of creation of a board with a card and a list and a board d
 
 ## Prerequisites
 
-For run this project you need download and setup [Java](https://java.com/en/download/) and [Maven](https://maven.apache.org/download.cgi)
+For run this project you need to download and setup [Java](https://java.com/en/download/) and [Maven](https://maven.apache.org/download.cgi)
 
 ## Running the tests
 
